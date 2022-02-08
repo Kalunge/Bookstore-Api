@@ -13,14 +13,16 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def destroy
-    book = Book.find_by(id: params[:id])
-    render json: book
+    Book.find(params[:id]).destroy!
+
+    head :no_content
   end
 
 
   private
-
   def book_params
     params.require(:book).permit(:title, :author)
   end
+
+
 end
