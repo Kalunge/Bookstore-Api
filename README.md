@@ -30,7 +30,7 @@ To get a local copy up and running follow these simple example steps.
 
 - GitHub: [@Kalunge](https://github.com/Kalunge)
 - Twitter: [@titus_muthomi](https://twitter.com/titus_muthomi)
-- LinkedIn: [Titus Muthomi](https://www.linkedin.com/in/muthomi-titus-295024181/)
+- LinkedIn: [Titus Muthomi](https://www.linkedin.com/in/kalunge/)
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
