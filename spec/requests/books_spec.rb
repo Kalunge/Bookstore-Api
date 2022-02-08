@@ -2,9 +2,12 @@ require 'rails_helper'
 
 describe 'Books API', type: :request do
   describe 'GET /books' do
-    it 'Returns all Books' do
+
+    before do
       FactoryBot.create(:book, title: "The coming to Americat", author: "Captain marvel")
       FactoryBot.create(:book, title: "The sovereignty og God in Suffering", author: "Paul David")
+    end
+    it 'Returns all Books' do
       get '/api/v1/books'
 
       expect(response).to have_http_status(:success)
