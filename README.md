@@ -1,24 +1,50 @@
-# README
+# Bookstore-Api
+A backend for storing books and their authors. Created using TDD Approach to cement the core Rails development skills. Authentication is done using JWT
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+## Built With
+- Rails
+- Rspec
+- PostgreSQL
+- jwt
 
-* Ruby version
+## Getting Started
 
-* System dependencies
+To get a local copy up and running follow these simple example steps.
 
-* Configuration
+### Setup
 
-* Database creation
 
-* Database initialization
 
-* How to run the test suite
+### Install
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+### Run
 
-* ...
+
+### Test
+
+## Author
+
+👤 **Titus Muthomi**
+
+- GitHub: [@Kalunge](https://github.com/Kalunge)
+- Twitter: [@titus_muthomi](https://twitter.com/titus_muthomi)
+- LinkedIn: [Titus Muthomi](https://www.linkedin.com/in/muthomi-titus-295024181/)
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page]().
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## Acknowledgments
+
+- Microverse
+
+## License
+
+[MIT](./LICENSE)
