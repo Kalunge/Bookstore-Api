@@ -8,7 +8,7 @@ class Api::V1::BooksController < ApplicationController
     author = Author.create!(author_params)
     book = author.books.create!(book_params)
     if book.save
-      render json: book, status: :created
+      render json: BookRepresenter.new(book).as_json, status: :created
     else
       render json: book.errors, status: :unprocessable_entity
     end
@@ -27,6 +27,6 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :author)
+    params.require(:book).permit(:title)
   end
 end
