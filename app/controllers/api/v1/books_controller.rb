@@ -5,7 +5,8 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def create
-    book = Book.new(book_params)
+    author = Author.create!(author_params)
+    book = author.books.create!(book_params)
     if book.save
       render json: book, status: :created
     else
@@ -20,6 +21,10 @@ class Api::V1::BooksController < ApplicationController
   end
 
   private
+
+  def author_params
+    params.require(:author).permit(:first_name, :last_name, :age)
+  end
 
   def book_params
     params.require(:book).permit(:title, :author)
