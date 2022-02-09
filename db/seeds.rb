@@ -6,4 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-books = Book.create!([{title: "The meaning of Marriage", author: "Timothy Keller"}, {title: "The Freedom of Self forgetfulbess", author: "Timothy Keller"}, {title: "The Fear of Man", author: "Welch"}, {title: "12 Rules for Life", author: "Jordan B Peterson"}])
+authors = Author.create!([{first_name: "Timothy ", last_name:"Keller", age:70}, {first_name: "Robert Chire ", last_name:"Sproul", age:78}, {first_name: "John ", last_name:"Piper", age:68}])
+
+books = Book.create!([{title: "The meaning of Marriage", author: Author.first}, {title: "The Freedom of Self forgetfulbess", author: Author.second}, {title: "The Fear of Man", author: Author.third}, {title: "12 Rules for Life", author: Author.first}])
