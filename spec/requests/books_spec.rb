@@ -4,8 +4,8 @@ describe 'Books API', type: :request do
   let(:first_author) { FactoryBot.create(:author, first_name: 'Timothy', last_name: 'Keller', age: 70) }
   let(:second_author) { FactoryBot.create(:author, first_name: 'John', last_name: 'Piper', age: 75) }
 
-  let(:book_one) {FactoryBot.create(:book, title: 'The coming to Americat', author: first_author)}
-  let(:book_two) {FactoryBot.create(:book, title: 'The sovereignty og God in Suffering', author: second_author)}
+  let(:book_one) { FactoryBot.create(:book, title: 'The coming to Americat', author: first_author) }
+  let(:book_two) { FactoryBot.create(:book, title: 'The sovereignty og God in Suffering', author: second_author) }
 
   describe 'GET /books' do
     before do
@@ -34,6 +34,40 @@ describe 'Books API', type: :request do
         ]
       )
     end
+
+    it 'It returns a subset of books based on limit' do
+      get '/api/v1/books', params: { limit: 1 }
+
+      expect(response).to have_http_status(:success)
+      expect(response_body.size).to eq(1)
+      expect(response_body).to eq(
+        [
+          {
+            'id' => 3,
+            'title' => 'The coming to Americat',
+            'author_name' => 'Timothy Keller',
+            'author_age' => 70
+          }
+        ]
+      )
+    end
+    it 'It returns a subset of books based on limit and offset' do
+      get '/api/v1/books', params: { limit: 1, offset: 1 }
+
+      expect(response).to have_http_status(:success)
+      expect(response_body.size).to eq(1)
+      expect(response_body).to eq(
+        [
+          {
+            'id' => 6,
+            'title' => 'The sovereignty og God in Suffering',
+            'author_name' => 'John Piper',
+            'author_age' => 75
+          }
+        ]
+      )
+    end
+
   end
 
   describe ' POST /books' do
@@ -49,7 +83,7 @@ describe 'Books API', type: :request do
       expect(Author.count).to eq(1)
       expect(response_body).to eql(
         {
-          'id' => 3,
+          'id' => 7,
           'title' => 'My best Book',
           'author_name' => 'Titus Kalunge',
           'author_age' => 50
@@ -74,38 +108,6 @@ describe 'Books API', type: :request do
   #     FactoryBot.create(:book, title: 'The coming to Americat', author: first_author)
   #     FactoryBot.create(:book, title: 'The sovereignty og God in Suffering', author: second_author)
   #   end
-  it 'It returns a subset of books based on limit' do
-    get '/api/v1/books', params: { limit: 1 }
 
-    expect(response).to have_http_status(:success)
-    expect(response_body.size).to eq(1)
-    expect(response_body).to eq(
-      [
-        {
-          'id' => 3,
-          'title' => 'The coming to Americat',
-          'author_name' => 'Timothy Keller',
-          'author_age' => 70
-        }
-      ]
-    )
-  end
-
-  it 'It returns a subset of books based on limit and offset' do
-    get '/api/v1/books', params: { limit: 1, offset: 1 }
-
-    expect(response).to have_http_status(:success)
-    expect(response_body.size).to eq(1)
-    expect(response_body).to eq(
-      [
-        {
-            'id' => 2,
-            'title' => 'The sovereignty og God in Suffering',
-            'author_name' => 'John Piper',
-            'author_age' => 75
-          }
-      ]
-    )
-  end
   # end
 end
