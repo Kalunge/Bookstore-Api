@@ -3,7 +3,7 @@ A backend for storing books and their authors. Created using TDD Approach to cem
 - TDD Approach => Request tests, Controller tests ...
 - Exception Handling via custom errorHandlers inheriting from StandardError
 - Endpoints protection
-- Writing custome serializers/Representers
+- Writing custom serializers/Representers
 - Handling Rails jobs
 - Authentication is done using JWT. 
 - Hashing Passwords with Bcrypt for Maximum protections
