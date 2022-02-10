@@ -49,7 +49,6 @@ A backend for storing books and their authors. Created using TDD Approach to cem
 </details>
 
 <details>
-#### CREATE BOOK
   <summary>
     <b>Create Book and Author</b> - <i>returns newly CReated Book</i>
   </summary>
@@ -85,7 +84,6 @@ A backend for storing books and their authors. Created using TDD Approach to cem
   ```
 </details>
 <details>
-#### GET BOOKS
   <summary>
     <b>Get Books</b> - <i>returns list of 66 bible books</i>
   </summary>
