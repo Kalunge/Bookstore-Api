@@ -10,6 +10,7 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def create
+    # TODO send author id in url params
     author = Author.create!(author_params)
     book = author.books.create!(book_params)
 
