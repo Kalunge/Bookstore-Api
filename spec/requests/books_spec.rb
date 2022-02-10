@@ -70,13 +70,13 @@ describe 'Books API', type: :request do
   end
 
   describe ' POST /books' do
-    let(:user_1) {FactoryBot.create(:user,  password: "qwerty")}
+    let(:user1) { FactoryBot.create(:user, password: 'qwerty') }
     it 'creates a selected book' do
       expect do
         post '/api/v1/books', params: {
           book: { title: 'My best Book' },
           author: { first_name: 'Titus', last_name: 'Kalunge', age: 50 }
-        }, headers: {"Authorization" => "Bearer #{AuthenticationTokenService.encode(user_1.id)}"}
+        }, headers: { 'Authorization' => "Bearer #{AuthenticationTokenService.encode(user1.id)}" }
       end.to change { Book.count }.from(0).to(1)
 
       expect(response).to have_http_status(:created)
@@ -91,8 +91,8 @@ describe 'Books API', type: :request do
       )
     end
 
-    context "Missing Authorization Header" do
-      it "Returns 401" do
+    context 'Missing Authorization Header' do
+      it 'Returns 401' do
         post '/api/v1/books', params: {}, headers: {}
 
         expect(response).to have_http_status(:unauthorized)
@@ -102,17 +102,18 @@ describe 'Books API', type: :request do
 
   describe 'DELETE /books/:id' do
     let!(:book) { FactoryBot.create(:book, title: 'The coming to Americat', author: first_author) }
-    let!(:user) {FactoryBot.create(:user, username: "new", password: "123456")}
+    let!(:user) { FactoryBot.create(:user, username: 'new', password: '123456') }
     it 'Deletes a Book by id' do
-      expect {
-        delete "/api/v1/books/#{book.id}", headers: {"Authorization" => "Bearer #{AuthenticationTokenService.encode(user.id)}"}
-      }.to change { Book.count }.from(1).to(0)
+      expect do
+        delete "/api/v1/books/#{book.id}",
+               headers: { 'Authorization' => "Bearer #{AuthenticationTokenService.encode(user.id)}" }
+      end.to change { Book.count }.from(1).to(0)
 
       expect(response).to have_http_status(:no_content)
     end
 
-    context "Missing Authorization Header" do
-      it "Returns 401" do
+    context 'Missing Authorization Header' do
+      it 'Returns 401' do
         delete "/api/v1/books/#{book.id}", headers: {}
 
         expect(response).to have_http_status(:unauthorized)
