@@ -1,4 +1,3 @@
-# require 'net/http'
 
 class Api::V1::BooksController < ApplicationController
   MAX_PAGINATION_LIMIT = 100
@@ -11,8 +10,8 @@ class Api::V1::BooksController < ApplicationController
     author = Author.create!(author_params)
     book = author.books.create!(book_params)
 
-    # uri = URI('http://localhost:4567//update_sku')
-    # Net::HTTP::Post.new(uri, 'Content-TYpe' => "application/json")
+   UpdateSkuJob.perform_later(book_params[:title])
+
     if book.save
       render json: BookRepresenter.new(book).as_json, status: :created
     else
