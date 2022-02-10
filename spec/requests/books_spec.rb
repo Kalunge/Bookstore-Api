@@ -20,13 +20,13 @@ describe 'Books API', type: :request do
       expect(response_body).to eql(
         [
           {
-            'id' => 1,
+            'id' => 2,
             'title' => 'The coming to Americat',
             'author_name' => 'Timothy Keller',
             'author_age' => 70
           },
           {
-            'id' => 2,
+            'id' => 3,
             'title' => 'The sovereignty og God in Suffering',
             'author_name' => 'John Piper',
             'author_age' => 75
@@ -43,7 +43,7 @@ describe 'Books API', type: :request do
       expect(response_body).to eq(
         [
           {
-            'id' => 3,
+            'id' => 4,
             'title' => 'The coming to Americat',
             'author_name' => 'Timothy Keller',
             'author_age' => 70
@@ -59,7 +59,7 @@ describe 'Books API', type: :request do
       expect(response_body).to eq(
         [
           {
-            'id' => 6,
+            'id' => 7,
             'title' => 'The sovereignty og God in Suffering',
             'author_name' => 'John Piper',
             'author_age' => 75
@@ -83,7 +83,7 @@ describe 'Books API', type: :request do
       expect(Author.count).to eq(1)
       expect(response_body).to eql(
         {
-          'id' => 7,
+          'id' => 8,
           'title' => 'My best Book',
           'author_name' => 'Titus Kalunge',
           'author_age' => 50
@@ -109,6 +109,14 @@ describe 'Books API', type: :request do
       }.to change { Book.count }.from(1).to(0)
 
       expect(response).to have_http_status(:no_content)
+    end
+
+    context "Missing Authorization Header" do
+      it "Returns 401" do
+        delete "/api/v1/books/#{book.id}", headers: {}
+
+        expect(response).to have_http_status(:unauthorized)
+      end
     end
   end
 end
