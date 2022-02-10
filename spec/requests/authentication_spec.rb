@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 describe 'Authentication', type: :request do
+  let(:user) {FactoryBot.create(:user, username: "Kalunge")}
   describe 'POST /authenticate' do
     it 'Authenticates the client and returns a token' do
-      post '/api/v1/authenticate', params: { username: 'kalunge', password: 'qwerty' }
+      post '/api/v1/authenticate', params: { username: user.username, password: 'qwerty' }
 
       expect(response).to have_http_status(:created)
       expect(response_body).to eq({
@@ -12,7 +13,7 @@ describe 'Authentication', type: :request do
     end
 
     it 'Return error when username is missing' do
-      post '/api/v1/authenticate', params: { username: 'kalunge' }
+      post '/api/v1/authenticate', params: { username: user.username }
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response_body).to eq({
                                     'errors' => 'param is missing or the value is '
