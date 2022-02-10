@@ -4,7 +4,7 @@ describe 'Authentication', type: :request do
   let(:user) {FactoryBot.create(:user, username: "Kalunge", password: "123")}
   describe 'POST /authenticate' do
     it 'Authenticates the client and returns a token' do
-      post '/api/v1/authenticate', params: { username: user.username, password: 'qwerty' }
+      post '/api/v1/authenticate', params: { username: user.username, password: '123' }
 
       expect(response).to have_http_status(:created)
       expect(response_body).to eq({
@@ -27,7 +27,7 @@ describe 'Authentication', type: :request do
                                   })
     end
     it "Returns error when password is incorrect" do
-      post '/api/v1/authenticate', params: { username: user.username,password: 'kalunge' }
+      post '/api/v1/authenticate', params: { username: user.username, password: 'kalunge' }
 
       expect(response).to have_http_status(:unauthorized)
     end
