@@ -1,4 +1,3 @@
-
 class Api::V1::BooksController < ApplicationController
   MAX_PAGINATION_LIMIT = 100
   def index
@@ -10,7 +9,7 @@ class Api::V1::BooksController < ApplicationController
     author = Author.create!(author_params)
     book = author.books.create!(book_params)
 
-   UpdateSkuJob.perform_later(book_params[:title])
+    UpdateSkuJob.perform_later(book_params[:title])
 
     if book.save
       render json: BookRepresenter.new(book).as_json, status: :created
