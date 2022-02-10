@@ -20,13 +20,13 @@ describe 'Books API', type: :request do
       expect(response_body).to eql(
         [
           {
-            'id' => 2,
+            'id' => 1,
             'title' => 'The coming to Americat',
             'author_name' => 'Timothy Keller',
             'author_age' => 70
           },
           {
-            'id' => 3,
+            'id' => 2,
             'title' => 'The sovereignty og God in Suffering',
             'author_name' => 'John Piper',
             'author_age' => 75
@@ -43,7 +43,7 @@ describe 'Books API', type: :request do
       expect(response_body).to eq(
         [
           {
-            'id' => 4,
+            'id' => 3,
             'title' => 'The coming to Americat',
             'author_name' => 'Timothy Keller',
             'author_age' => 70
@@ -59,7 +59,7 @@ describe 'Books API', type: :request do
       expect(response_body).to eq(
         [
           {
-            'id' => 7,
+            'id' => 6,
             'title' => 'The sovereignty og God in Suffering',
             'author_name' => 'John Piper',
             'author_age' => 75
@@ -70,43 +70,45 @@ describe 'Books API', type: :request do
   end
 
   describe ' POST /books' do
+    let(:user_1) {FactoryBot.create(:user,  password: "qwerty")}
     it 'creates a selected book' do
       expect do
         post '/api/v1/books', params: {
           book: { title: 'My best Book' },
           author: { first_name: 'Titus', last_name: 'Kalunge', age: 50 }
-        }, headers: {"Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.DiPWrOKsx3sPeVClrm_j07XNdSYHgBa3Qctosdxax3w"}
+        }, headers: {"Authorization" => "Bearer #{AuthenticationTokenService.encode(user_1.id)}"}
       end.to change { Book.count }.from(0).to(1)
 
       expect(response).to have_http_status(:created)
       expect(Author.count).to eq(1)
       expect(response_body).to eql(
         {
-          'id' => 8,
+          'id' => 7,
           'title' => 'My best Book',
           'author_name' => 'Titus Kalunge',
           'author_age' => 50
         }
       )
     end
+
+    context "Missing Authorization Header" do
+      it "Returns 401" do
+        post '/api/v1/books', params: {}, headers: {}
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
   end
 
   describe 'DELETE /books/:id' do
     let!(:book) { FactoryBot.create(:book, title: 'The coming to Americat', author: first_author) }
+    let!(:user) {FactoryBot.create(:user, username: "new", password: "123456")}
     it 'Deletes a Book by id' do
-      expect do
-        delete "/api/v1/books/#{book.id}"
-      end.to change { Book.count }.from(1).to(0)
+      expect {
+        delete "/api/v1/books/#{book.id}", headers: {"Authorization" => "Bearer #{AuthenticationTokenService.encode(user.id)}"}
+      }.to change { Book.count }.from(1).to(0)
 
       expect(response).to have_http_status(:no_content)
     end
   end
-
-  # describe "Pagination" do
-  #   before do
-  #     FactoryBot.create(:book, title: 'The coming to Americat', author: first_author)
-  #     FactoryBot.create(:book, title: 'The sovereignty og God in Suffering', author: second_author)
-  #   end
-
-  # end
 end

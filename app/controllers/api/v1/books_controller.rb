@@ -3,14 +3,14 @@ class Api::V1::BooksController < ApplicationController
 
   MAX_PAGINATION_LIMIT = 100
 
-  before_action :authenticate_user, only:[:create, :destroy]
+  before_action :authenticate_user, only: %i[create destroy]
   def index
     books = Book.limit(limit).offset(params[:offset])
     render json: BooksRepresenter.new(books).as_json
   end
 
   def create
-    # TODO send author id in url params
+    # TODO: send author id in url params
     author = Author.create!(author_params)
     book = author.books.create!(book_params)
 
